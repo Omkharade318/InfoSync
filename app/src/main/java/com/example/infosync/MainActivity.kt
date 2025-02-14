@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.infosync.presentation.onboarding.OnBoardingScreen
 import com.example.infosync.ui.theme.InfoSyncTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,9 +15,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             InfoSyncTheme {
-
+                OnBoardingScreen()
             }
         }
     }
 }
-

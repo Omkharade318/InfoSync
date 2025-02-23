@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
             appEntryUseCases.readAppEntry().collect {
                 Log.d("Test", it.toString())
             }
-
         }
         enableEdgeToEdge()
         setContent {

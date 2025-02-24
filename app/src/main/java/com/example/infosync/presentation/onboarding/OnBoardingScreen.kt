@@ -11,7 +11,9 @@ import com.example.infosync.presentation.onboarding.components.OnBoardingPage
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(
+    event: (OnBoardingEvent) -> Unit
+) {
     val pagerState = rememberPagerState(initialPage = 0) {
         pages.size
     }
@@ -22,7 +24,8 @@ fun OnBoardingScreen() {
         ) { index ->
             OnBoardingPage(
                 page = pages[index],
-                pagerState = pagerState // Pass pagerState to OnBoardingPage
+                pagerState = pagerState, // Pass pagerState to OnBoardingPage
+                event = event
             )
         }
     }

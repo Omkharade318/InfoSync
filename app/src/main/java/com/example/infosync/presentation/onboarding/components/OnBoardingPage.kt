@@ -40,6 +40,7 @@ import com.example.infosync.R
 import com.example.infosync.presentation.Dimens.PageIndicatorWidth
 import com.example.infosync.presentation.common.NewsButton
 import com.example.infosync.presentation.common.NewsTextButton
+import com.example.infosync.presentation.onboarding.OnBoardingEvent
 import com.example.infosync.presentation.onboarding.pages
 import com.example.infosync.ui.theme.InfoSyncTheme
 import kotlinx.coroutines.launch
@@ -49,7 +50,8 @@ import kotlinx.coroutines.launch
 fun OnBoardingPage(
     modifier: Modifier = Modifier,
     page: Page,
-    pagerState: PagerState // Add pagerState as a parameter
+    pagerState: PagerState, // Add pagerState as a parameter
+    event: (OnBoardingEvent) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -141,7 +143,7 @@ fun OnBoardingPage(
                 onClick = {
                     scope.launch {
                         if (pagerState.currentPage == 2) { // Fixed: Check for the last page
-                            // TODO: Navigate to the main screen
+                            event(OnBoardingEvent.SaveAppEntry)
                         } else {
                             pagerState.animateScrollToPage(
                                 page = pagerState.currentPage + 1

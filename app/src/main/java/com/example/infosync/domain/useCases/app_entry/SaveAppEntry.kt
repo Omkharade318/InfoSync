@@ -1,4 +1,4 @@
-package com.example.infosync.domain.useCases
+package com.example.infosync.domain.useCases.app_entry
 
 import com.example.infosync.domain.manager.LocalUserManager
 

@@ -2,7 +2,7 @@ package com.example.infosync.presentation.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.infosync.domain.useCases.AppEntryUseCases
+import com.example.infosync.domain.useCases.app_entry.AppEntryUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

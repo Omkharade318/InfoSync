@@ -11,6 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.infosync.presentation.home.HomeScreen
+import com.example.infosync.presentation.home.HomeViewModel
 import com.example.infosync.presentation.onboarding.OnBoardingScreen
 import com.example.infosync.presentation.onboarding.OnBoardingViewModel
 
@@ -49,7 +52,15 @@ fun NavGraph(
                     .fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "News Navigator Screen")
+                    val viewModel: HomeViewModel = hiltViewModel()
+                    val articles = viewModel.news.collectAsLazyPagingItems()
+
+                    HomeScreen(
+                        articles = articles,
+                        navigate ={
+
+                        }
+                    )
                 }
             }
         }

@@ -11,6 +11,7 @@ import com.example.infosync.domain.useCases.app_entry.ReadAppEntry
 import com.example.infosync.domain.useCases.app_entry.SaveAppEntry
 import com.example.infosync.domain.useCases.news.GetNews
 import com.example.infosync.domain.useCases.news.NewsUseCases
+import com.example.infosync.domain.useCases.news.SearchNews
 import com.example.infosync.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -59,7 +60,8 @@ object AppModule {
         newsRepository: NewsRepository
     ): NewsUseCases {
         return NewsUseCases(
-            getNews = GetNews(newsRepository = newsRepository)
+            getNews = GetNews(newsRepository = newsRepository),
+            searchNews = SearchNews(newsRepository = newsRepository)
         )
     }
 }

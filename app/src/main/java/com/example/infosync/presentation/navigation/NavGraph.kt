@@ -16,6 +16,8 @@ import com.example.infosync.presentation.home.HomeScreen
 import com.example.infosync.presentation.home.HomeViewModel
 import com.example.infosync.presentation.onboarding.OnBoardingScreen
 import com.example.infosync.presentation.onboarding.OnBoardingViewModel
+import com.example.infosync.presentation.search.SearchScreen
+import com.example.infosync.presentation.search.SearchViewModel
 
 
 @Composable
@@ -52,14 +54,12 @@ fun NavGraph(
                     .fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    val viewModel: HomeViewModel = hiltViewModel()
-                    val articles = viewModel.news.collectAsLazyPagingItems()
+                    val viewModel: SearchViewModel = hiltViewModel()
 
-                    HomeScreen(
-                        articles = articles,
-                        navigate ={
-
-                        }
+                    SearchScreen(
+                        state = viewModel.state.value,
+                        event = viewModel::onEvent,
+                        navigate = {}
                     )
                 }
             }

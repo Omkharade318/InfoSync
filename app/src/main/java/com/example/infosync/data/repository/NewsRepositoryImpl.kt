@@ -1,5 +1,6 @@
 package com.example.infosync.data.repository
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -27,6 +28,7 @@ class NewsRepositoryImpl(
     }
 
     override fun searchNews(searchQuery: String, sources: List<String>): Flow<PagingData<Article>> {
+        Log.d("NewsRepositoryImpl", "searchNews called with query: $searchQuery, sources: $sources")
         return Pager(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = {

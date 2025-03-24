@@ -1,5 +1,6 @@
 package com.example.infosync.data.remote
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.infosync.domain.model.Article
@@ -22,25 +23,17 @@ class SearchNewsPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         val page = params.key ?: 1
         return try {
-
-            val newsResponse = newsApi.searchNews(searchQuery = searchQuery, sources = sources, page = page)
-            totalNewsCount += newsResponse.articles.size
-            val articles = newsResponse.articles.distinctBy { it.title } //removes duplicates
-
+            val newsResponse = newsApi.searchNews(sources = sources, searchQuery = searchQuery, page = page)
+            Log.d("SearchNewsPagingSource", "API Response: ${newsResponse.articles.size} articles found")
+            val articles = newsResponse.articles.distinctBy { it.title }
             LoadResult.Page(
                 data = articles,
-                nextKey = if (totalNewsCount == newsResponse.totalResults) null else page + 1,
-                prevKey = null
+                nextKey = if (articles.isEmpty()) null else page + 1,
+                prevKey = if (page == 1) null else page - 1
             )
-
-        }catch (e: Exception) {
-
+        } catch (e: Exception) {
             e.printStackTrace()
-            LoadResult.Error(
-                throwable = e
-            )
-
+            LoadResult.Error(throwable = e)
         }
     }
-
 }

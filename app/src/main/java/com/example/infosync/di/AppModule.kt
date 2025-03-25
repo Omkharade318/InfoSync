@@ -1,6 +1,10 @@
 package com.example.infosync.di
 
 import android.app.Application
+import androidx.room.Room
+import com.example.infosync.data.local.NewsDao
+import com.example.infosync.data.local.NewsDatabase
+import com.example.infosync.data.local.NewsTypeConvertor
 import com.example.infosync.data.manager.LocalUserManagerImpl
 import com.example.infosync.data.remote.NewsApi
 import com.example.infosync.data.repository.NewsRepositoryImpl
@@ -13,6 +17,7 @@ import com.example.infosync.domain.useCases.news.GetNews
 import com.example.infosync.domain.useCases.news.NewsUseCases
 import com.example.infosync.domain.useCases.news.SearchNews
 import com.example.infosync.util.Constants.BASE_URL
+import com.example.infosync.util.Constants.NEWS_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -64,4 +69,25 @@ object AppModule {
             searchNews = SearchNews(newsRepository = newsRepository)
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideNewsDatabase(
+        application: Application
+    ): NewsDatabase {
+        return Room.databaseBuilder(
+            context = application,
+            klass = NewsDatabase::class.java,
+            name = NEWS_DATABASE_NAME
+        ).addTypeConverter(NewsTypeConvertor())
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsDao(
+        newsDatabase: NewsDatabase
+    ): NewsDao = newsDatabase.newsDao
+
 }

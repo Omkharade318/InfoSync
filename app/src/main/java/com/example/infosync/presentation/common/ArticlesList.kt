@@ -26,7 +26,7 @@ fun ArticlesList(
 
     if (handlePagingResult) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(MediumPadding1),
             contentPadding = PaddingValues(all = ExtraSmallPadding2)
         ) {
@@ -41,6 +41,25 @@ fun ArticlesList(
     }
 }
 
+@Composable
+fun ArticlesList(
+    modifier: Modifier = Modifier,
+    articles: List<Article>,
+    onClick: (Article) -> Unit
+) {
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(MediumPadding1),
+            contentPadding = PaddingValues(all = ExtraSmallPadding2)
+        ) {
+            items(
+                count = articles.size,
+            ) {
+                val article = articles[it]
+                    ArticleCard(article = article, onClick = { onClick(article) })
+            }
+        }
+}
 @Composable
 fun handlePagingResult(
     articles: LazyPagingItems<Article>

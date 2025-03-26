@@ -13,9 +13,12 @@ import com.example.infosync.domain.repository.NewsRepository
 import com.example.infosync.domain.useCases.app_entry.AppEntryUseCases
 import com.example.infosync.domain.useCases.app_entry.ReadAppEntry
 import com.example.infosync.domain.useCases.app_entry.SaveAppEntry
+import com.example.infosync.domain.useCases.news.DeleteArticle
 import com.example.infosync.domain.useCases.news.GetNews
 import com.example.infosync.domain.useCases.news.NewsUseCases
 import com.example.infosync.domain.useCases.news.SearchNews
+import com.example.infosync.domain.useCases.news.SelectArticles
+import com.example.infosync.domain.useCases.news.UpsertArticle
 import com.example.infosync.util.Constants.BASE_URL
 import com.example.infosync.util.Constants.NEWS_DATABASE_NAME
 import dagger.Module
@@ -62,11 +65,15 @@ object AppModule {
     @Provides
     @Singleton
     fun providesNewsCases(
-        newsRepository: NewsRepository
+        newsRepository: NewsRepository,
+        newsDao: NewsDao
     ): NewsUseCases {
         return NewsUseCases(
             getNews = GetNews(newsRepository = newsRepository),
-            searchNews = SearchNews(newsRepository = newsRepository)
+            searchNews = SearchNews(newsRepository = newsRepository),
+            upsertArticle = UpsertArticle(newsDao = newsDao),
+            deleteArticle = DeleteArticle(newsDao = newsDao),
+            selectArticles = SelectArticles(newsDao = newsDao)
         )
     }
 

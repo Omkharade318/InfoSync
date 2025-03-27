@@ -17,6 +17,7 @@ import com.example.infosync.domain.useCases.news.DeleteArticle
 import com.example.infosync.domain.useCases.news.GetNews
 import com.example.infosync.domain.useCases.news.NewsUseCases
 import com.example.infosync.domain.useCases.news.SearchNews
+import com.example.infosync.domain.useCases.news.SelectArticle
 import com.example.infosync.domain.useCases.news.SelectArticles
 import com.example.infosync.domain.useCases.news.UpsertArticle
 import com.example.infosync.util.Constants.BASE_URL
@@ -59,8 +60,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNewsRepository(
-        newsApi: NewsApi
-    ): NewsRepository = NewsRepositoryImpl(newsApi = newsApi)
+        newsApi: NewsApi,
+        newsDoa: NewsDao
+    ): NewsRepository = NewsRepositoryImpl(newsApi = newsApi, newsDao = newsDoa)
 
     @Provides
     @Singleton
@@ -71,9 +73,10 @@ object AppModule {
         return NewsUseCases(
             getNews = GetNews(newsRepository = newsRepository),
             searchNews = SearchNews(newsRepository = newsRepository),
-            upsertArticle = UpsertArticle(newsDao = newsDao),
-            deleteArticle = DeleteArticle(newsDao = newsDao),
-            selectArticles = SelectArticles(newsDao = newsDao)
+            upsertArticle = UpsertArticle(newsRepository = newsRepository),
+            deleteArticle = DeleteArticle(newsRepository = newsRepository),
+            selectArticles = SelectArticles(newsRepository = newsRepository),
+            selectArticle = SelectArticle(newsRepository = newsRepository)
         )
     }
 

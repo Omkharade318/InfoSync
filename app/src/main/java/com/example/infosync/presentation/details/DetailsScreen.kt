@@ -30,7 +30,7 @@ import com.example.infosync.R
 @Composable
 fun DetailScreen(
     article: Article,
-    onEvent: (DetailsEvent) -> Unit,
+    event: (DetailsEvent) -> Unit,
     navigateUp: () -> Unit
 ){
 
@@ -60,7 +60,7 @@ fun DetailScreen(
                 }
             },
             onBookmarkClick = {
-                onEvent(DetailsEvent.SaveArticle)
+                onEvent(DetailsEvent.UpsertDeleteArticle(article = article))
             },
 
             onBackClick = navigateUp

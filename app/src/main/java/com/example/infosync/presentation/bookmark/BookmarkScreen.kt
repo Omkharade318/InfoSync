@@ -14,13 +14,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.infosync.presentation.Dimens.MediumPadding1
 import com.example.infosync.R
+import com.example.infosync.domain.model.Article
 import com.example.infosync.presentation.common.ArticlesList
 import com.example.infosync.presentation.navigation.Route
 
 @Composable
 fun BookmarkScreen(
     state: BookmarkState,
-    navigate: (String) -> Unit
+    navigateToDetails: (Article) -> Unit
 ) {
 
     Column(
@@ -43,7 +44,7 @@ fun BookmarkScreen(
 
         ArticlesList(
             articles = state.articles,
-            onClick = { navigate(Route.DetailsScreen.route) }
+            onClick = { navigateToDetails(it) }
         )
 
 

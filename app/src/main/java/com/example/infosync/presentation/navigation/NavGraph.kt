@@ -2,7 +2,6 @@ package com.example.infosync.presentation.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,9 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.infosync.presentation.home.HomeScreen
-import com.example.infosync.presentation.home.HomeViewModel
+import com.example.infosync.presentation.news_navigator.NewsNavigator
 import com.example.infosync.presentation.onboarding.OnBoardingScreen
 import com.example.infosync.presentation.onboarding.OnBoardingViewModel
 import com.example.infosync.presentation.search.SearchScreen
@@ -54,13 +51,7 @@ fun NavGraph(
                     .fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    val viewModel: SearchViewModel = hiltViewModel()
-
-                    SearchScreen(
-                        state = viewModel.state.value,
-                        event = viewModel::onEvent,
-                        navigate = {}
-                    )
+                    NewsNavigator()
                 }
             }
         }

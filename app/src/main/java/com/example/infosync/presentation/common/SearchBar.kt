@@ -39,7 +39,6 @@ fun SearchBar(
     onValueChange: (String) -> Unit,
     onSearch: () -> Unit
 ){
-
     val interactionSource = remember {
         MutableInteractionSource()
     }
@@ -59,8 +58,7 @@ fun SearchBar(
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .searchBarBorder()
-            ,
+                .searchBarBorder(),
             value = text,
             onValueChange = onValueChange,
             readOnly = readOnly,
@@ -93,9 +91,7 @@ fun SearchBar(
             singleLine = true,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
-                onSearch = {
-                    onSearch
-                }
+                onSearch = { onSearch() }
             ),
             textStyle = MaterialTheme.typography.bodyMedium,
             interactionSource = interactionSource
@@ -103,12 +99,12 @@ fun SearchBar(
     }
 }
 
-fun Modifier.searchBarBorder() = composed{
-        border(
-            width = 2.dp,
-            color = Color.Black,
-            shape = MaterialTheme.shapes.medium
-        )
+fun Modifier.searchBarBorder() = composed {
+    border(
+        width = 2.dp,
+        color = Color.Black,
+        shape = MaterialTheme.shapes.medium
+    )
 }
 
 @Preview(showBackground = true)
@@ -119,9 +115,8 @@ fun SearchPreview(modifier: Modifier = Modifier) {
         SearchBar(
             text = "",
             readOnly = false,
-            onValueChange = {
-
-            }
-        ) { }
+            onValueChange = {},
+            onSearch = {}
+        )
     }
 }

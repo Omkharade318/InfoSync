@@ -1,6 +1,7 @@
 package com.example.infosync.presentation.common
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -65,7 +66,7 @@ fun ArticleCard(
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.bodyMedium,
-                color = colorResource(id = R.color.text_title),
+                color = if (isSystemInDarkTheme()) colorResource(id = R.color.white) else colorResource(id = R.color.text_title),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )

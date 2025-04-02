@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name= "App.Starting.Theme" parent="Theme.SplashScreen">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="App.Starting.Theme" parent="Theme.SplashScreen">
         <item name="android:windowBackground">#1C1E21</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
         <item name="postSplashScreenTheme">@style/Theme.InfoSync</item>

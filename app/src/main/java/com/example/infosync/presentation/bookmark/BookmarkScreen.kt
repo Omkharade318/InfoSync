@@ -1,5 +1,6 @@
 package com.example.infosync.presentation.bookmark
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,9 +35,11 @@ fun BookmarkScreen(
         Text(
             text = "Bookmark",
             style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
-            color = colorResource(
-                id = R.color.text_title
-            )
+            color =
+                if (isSystemInDarkTheme())
+                    colorResource(id = R.color.white)
+                else
+                    colorResource(id = R.color.text_title)
         )
 
         Spacer(modifier = Modifier.height(MediumPadding1))

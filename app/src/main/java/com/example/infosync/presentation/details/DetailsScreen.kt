@@ -2,6 +2,7 @@ package com.example.infosync.presentation.details
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -87,7 +88,7 @@ fun DetailScreen(
                 Text(
                     text = article.title,
                     style = MaterialTheme.typography.displaySmall,
-                    color = colorResource(id = R.color.text_title)
+                    color = if (isSystemInDarkTheme()) colorResource(id = R.color.white) else colorResource(id = R.color.text_title)
                 )
 
                 Text(

@@ -27,6 +27,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Add Room schema location
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true",
+                    "room.expandProjection" to "true"
+                )
+            }
+        }
     }
 
     buildTypes {
@@ -59,7 +70,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -113,9 +123,8 @@ dependencies {
     implementation ("androidx.paging:paging-compose:3.2.0-rc01")
 
     //Room
-    var room_version = "2.5.2"
+    var room_version = "2.6.1"  // Updated Room version
     implementation ("androidx.room:room-runtime:$room_version")
+    implementation ("androidx.room:room-ktx:$room_version")  // For Kotlin extensions and coroutines support
     kapt ("androidx.room:room-compiler:$room_version")
-    implementation ("androidx.room:room-ktx:2.5.2")
-
 }

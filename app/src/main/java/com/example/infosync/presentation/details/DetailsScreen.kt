@@ -26,14 +26,12 @@ import com.example.infosync.presentation.Dimens.MediumPadding1
 import com.example.infosync.presentation.details.components.DetailsTopBar
 import com.example.infosync.R
 
-
 @Composable
 fun DetailScreen(
     article: Article,
     event: (DetailsEvent) -> Unit,
     navigateUp: () -> Unit
 ){
-
     val context = LocalContext.current
 
     Column(
@@ -60,9 +58,8 @@ fun DetailScreen(
                 }
             },
             onBookmarkClick = {
-                onEvent(DetailsEvent.UpsertDeleteArticle(article = article))
+                event(DetailsEvent.UpsertDeleteArticle(article = article))
             },
-
             onBackClick = navigateUp
         )
 

@@ -1,6 +1,8 @@
 package com.example.infosync.news.presentation.news_navigator
 
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -33,7 +35,11 @@ import com.example.infosync.news.presentation.news_navigator.components.BottomNa
 import com.example.infosync.news.presentation.news_navigator.components.NewsBottomNavigation
 import com.example.infosync.news.presentation.search.SearchScreen
 import com.example.infosync.news.presentation.search.SearchViewModel
+import androidx.compose.foundation.layout.Box
+import com.example.infosync.chatBot.ChatPage
+import com.example.infosync.chatBot.model.ChatViewModel
 
+@RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 @Composable
 fun NewsNavigator(){
 
@@ -116,6 +122,9 @@ fun NewsNavigator(){
                             navController = navController,
                             article = article
                         )
+                    },
+                    navigateToChatPage = {
+                        navController.navigate(Route.ChatScreen.route)
                     }
                 )
             }
@@ -169,6 +178,16 @@ fun NewsNavigator(){
                         )
                     }
                 )
+            }
+
+            composable(route = Route.ChatScreen.route) {
+                val chatViewModel: ChatViewModel = hiltViewModel()
+                Box(modifier = Modifier.fillMaxSize()) {
+                    ChatPage(
+                        modifier = Modifier,
+                        viewModel = chatViewModel
+                    )
+                }
             }
         }
     }

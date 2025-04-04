@@ -40,7 +40,8 @@ import com.example.infosync.news.presentation.common.SearchBar
 fun HomeScreen(
     articles: LazyPagingItems<Article>,
     navigateToSearch: () -> Unit,
-    navigateToDetail: (Article) -> Unit
+    navigateToDetail: (Article) -> Unit,
+    navigateToChatPage: () -> Unit
 ) {
     val titles by remember {
         derivedStateOf {
@@ -77,9 +78,7 @@ fun HomeScreen(
 
             IconButton(
                 modifier = Modifier.size(40.dp),
-                onClick = {
-
-                },
+                onClick = navigateToChatPage,
                 colors = IconButtonColors(
                     containerColor = Color.Transparent,
                     contentColor =

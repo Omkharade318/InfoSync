@@ -15,4 +15,3 @@ val ColorModelLightMessage = Color(0xFF625b71)
 
 val ColorUserDarkMessage = Color(0xFFD0BCFF)
 val ColorModelDarkMessage = Color(0xFFCCC2DC)
-

@@ -1,16 +1,22 @@
 package com.example.infosync.chatBot
 
+import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,22 +38,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.infosync.chatBot.model.ChatViewModel
 import com.example.a2.model.MessageModel
-import com.example.infosync.chatBot.theme.ColorModelMessage
-import com.example.infosync.chatBot.theme.ColorUserMessage
-import com.example.infosync.chatBot.theme.LightBlue
 import com.example.infosync.R
+import com.example.infosync.chatBot.theme.ColorModelDarkMessage
+import com.example.infosync.chatBot.theme.ColorModelLightMessage
+import com.example.infosync.chatBot.theme.ColorUserDarkMessage
+import com.example.infosync.chatBot.theme.ColorUserLightMessage
+import com.example.infosync.news.presentation.Dimens.MediumPadding1
 
 @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 @Composable
 fun ChatPage(modifier: Modifier = Modifier, viewModel: ChatViewModel) {
     Column(
-        modifier = modifier.background(Color.White)
+        modifier = modifier.background(if(isSystemInDarkTheme()) colorResource(R.color.dark_background) else colorResource(R.color.chatBot_background))
     ) {
         AppHeader()
         MessageList(
@@ -68,27 +79,30 @@ fun MessageList(modifier: Modifier = Modifier, messageList: List<MessageModel>) 
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .background(Color.White),
+                .background(
+                    if (isSystemInDarkTheme()) colorResource(R.color.dark_background) else colorResource(
+                        R.color.chatBot_background
+                    )
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Icon(
-                modifier = Modifier.size(60.dp),
-                painter = painterResource(id = R.drawable.baseline_question_answer_24),
-                contentDescription = "Icon",
-                tint = Color.Blue,
+            Image(
+                painter = painterResource(id = R.drawable.chatbot),
+                contentDescription = "chatbot image",
+                modifier = Modifier.size(150.dp)
             )
             Text(
                 text = "Ask me anything",
-                fontSize = 22.sp,
-                color = LightBlue,
+                fontSize = 24.sp,
+                color = if(isSystemInDarkTheme()) Color.White else Color.Black,
             )
         }
     } else {
         LazyColumn(
             modifier = modifier
-                .background(Color.White),
-            reverseLayout = true // Remove .reversed() in LazyColumn
+                .background(Color.Transparent),
+            reverseLayout = true
         ) {
             items(messageList.reversed()) {
                 MessageRow(messageModel = it)
@@ -107,27 +121,52 @@ fun MessageRow(messageModel: MessageModel) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White)
+                .background(Color.Transparent)
         ) {
-            Box(
-                modifier = Modifier
-                    .align(if (isModel) Alignment.BottomStart else Alignment.BottomEnd)
-                    .padding(
-                        start = if (isModel) 8.dp else 70.dp,
-                        end = if (isModel) 70.dp else 8.dp,
-                        top = 8.dp,
-                        bottom = 8.dp
-                    )
-                    .clip(RoundedCornerShape(48f))
-                    .background(if (isModel) ColorModelMessage else ColorUserMessage)
-                    .padding(16.dp)
-            ) {
-                SelectionContainer {
-                    Text(
-                        text = messageModel.message,
-                        fontWeight = FontWeight.W500,
-                        color = Color.White
-                    )
+            if (!isSystemInDarkTheme()) {
+                Box(
+                    modifier = Modifier
+                        .align(if (isModel) Alignment.BottomStart else Alignment.BottomEnd)
+                        .padding(
+                            start = if (isModel) 8.dp else 70.dp,
+                            end = if (isModel) 70.dp else 8.dp,
+                            top = 8.dp,
+                            bottom = 8.dp
+                        )
+                        .clip(RoundedCornerShape(48f))
+                        .background(if (isModel) ColorModelLightMessage else ColorUserLightMessage)
+                        .padding(16.dp)
+                ) {
+                    SelectionContainer {
+                        Text(
+                            text = messageModel.message,
+                            fontWeight = FontWeight.W500,
+                            color = if(isSystemInDarkTheme()) Color.Black else Color.White
+                        )
+                    }
+                }
+            }
+            else{
+                Box(
+                    modifier = Modifier
+                        .align(if (isModel) Alignment.BottomStart else Alignment.BottomEnd)
+                        .padding(
+                            start = if (isModel) 8.dp else 70.dp,
+                            end = if (isModel) 70.dp else 8.dp,
+                            top = 8.dp,
+                            bottom = 8.dp
+                        )
+                        .clip(RoundedCornerShape(48f))
+                        .background(if (isModel) ColorModelDarkMessage else ColorUserDarkMessage)
+                        .padding(16.dp)
+                ) {
+                    SelectionContainer {
+                        Text(
+                            text = messageModel.message,
+                            fontWeight = FontWeight.W500,
+                            color = if (isSystemInDarkTheme()) Color.Black else Color.White
+                        )
+                    }
                 }
             }
         }
@@ -142,7 +181,7 @@ fun MessageInput(onMessageSend: (String) -> Unit) {
     Row(
         modifier = Modifier
             .padding(8.dp)
-            .background(Color.White),
+            .background(Color.Transparent),
         verticalAlignment = Alignment.CenterVertically
     ) {
         OutlinedTextField(
@@ -150,23 +189,23 @@ fun MessageInput(onMessageSend: (String) -> Unit) {
             value = message,
             onValueChange = { message = it },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = LightBlue,
-                unfocusedBorderColor = LightBlue,
-                cursorColor = LightBlue,
-                focusedTextColor = LightBlue,
-                unfocusedTextColor = LightBlue,
+                focusedBorderColor = if (isSystemInDarkTheme())Color.White else Color.Black,
+                unfocusedBorderColor = if (isSystemInDarkTheme()) colorResource(R.color.shimmer) else colorResource(R.color.body),
+                cursorColor = if (isSystemInDarkTheme()) Color.White else Color.Black,
+                focusedTextColor = if (isSystemInDarkTheme()) colorResource(R.color.placeholder) else colorResource(R.color.bodyBackground),
+                unfocusedTextColor = if (isSystemInDarkTheme()) colorResource(R.color.chatBot_background) else colorResource(R.color.body),
             ),
             placeholder = {
                 Text(
                     text = "Type your message...",
-                    color = LightBlue
+                    color = if (isSystemInDarkTheme()) Color.White else Color.Black
                 )
             }
         )
         IconButton(
             colors = IconButtonColors(
                 contentColor = Color.Black,
-                containerColor = Color.White,
+                containerColor = Color.Transparent,
                 disabledContentColor = Color.Black,
                 disabledContainerColor = Color.Black
             ),
@@ -179,7 +218,8 @@ fun MessageInput(onMessageSend: (String) -> Unit) {
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.Send,
-                contentDescription = "Send"
+                contentDescription = "Send",
+                tint = if (isSystemInDarkTheme()) Color.White else Color.Black
             )
         }
     }
@@ -190,13 +230,32 @@ fun AppHeader() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(LightBlue)
+            .background(Color.Transparent)
+            .padding(4.dp)
+            .statusBarsPadding()
     ) {
-        Text(
-            modifier = Modifier.padding(16.dp),
-            text = "A2",
-            color = Color.White,
-            fontSize = 22.sp
+        Image(
+            painterResource(id = R.drawable.ic_logo),
+            contentDescription = null,
+            modifier = Modifier
+                .width(160.dp)
+                .height(50.dp)
+                .padding(horizontal = MediumPadding1)
         )
+
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun ChatPagePreview(){
+
+    val chatViewModel: ChatViewModel = hiltViewModel()
+
+    ChatPage(
+        viewModel = chatViewModel
+    )
+
 }

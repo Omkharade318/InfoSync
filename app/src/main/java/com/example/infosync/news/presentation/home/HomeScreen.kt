@@ -120,7 +120,7 @@ fun HomeScreen(
                 .padding(start = MediumPadding1)
                 .basicMarquee(),  // to add animation to the text
             fontSize = 12.sp,
-            color = colorResource(id = R.color.placeholder)
+            color = colorResource(if (!isSystemInDarkTheme()) R.color.placeholder else R.color.dark_background)
         )
 
         Spacer(modifier = Modifier.height(MediumPadding1))

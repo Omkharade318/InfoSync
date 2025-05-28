@@ -127,4 +127,6 @@ dependencies {
     implementation ("androidx.room:room-runtime:$room_version")
     implementation ("androidx.room:room-ktx:$room_version")  // For Kotlin extensions and coroutines support
     kapt ("androidx.room:room-compiler:$room_version")
+
+    implementation("com.google.ai.client.generativeai:generativeai:0.4.0")
 }
